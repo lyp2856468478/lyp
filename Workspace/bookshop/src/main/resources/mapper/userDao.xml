@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.bookshopboot.dao.userDao">
+    <!--用户登录-->
+    <select id="userLoginSer" resultType="com.gd.bookshopboot.domain.Mall_user">
+        SELECT * FROM mall_user WHERE username=#{username} AND password=#{password}
+    </select>
+
+
+    <!--获取指定图书的用户评论-->
+    <select id="getCommentListDao" resultType="com.gd.bookshopboot.domain.Comment">
+        SELECT * FROM comment WHERE book_id=#{book_id} ORDER BY id desc
+    </select>
+
+    <!--添加用户评论-->
+    <insert id="addCommentDao">
+        insert into comment(user_id,user_name,comment_info,book_id,comment_time,book_name,user_img)
+        values(#{user_id},#{user_name},#{comment_info},#{book_id},#{comment_time},#{book_name},#{user_img})
+    </insert>
+
+    <!--根据id删除评论-->
+    <delete id="deleteCommentByIdDao">
+        delete from comment where id=#{id}
+    </delete>
+
+    <!--查询收藏表有没有这本图书-->
+    <select id="queryCollBookByIdDao" resultType="com.gd.bookshopboot.domain.CollectionBook">
+        select * from collectionbook where book_id=#{book_id}
+    </select>
+
+    <!--添加收藏-->
+    <insert id="addCollectionDao">
+        insert into collectionbook(user_id,book_id,book_name,Collection_time,book_img)
+        values (#{user_id},#{book_id},#{book_name},#{Collection_time},#{book_img})
+    </insert>
+
+    <!--修改图书库存和销量-->
+    <update id="updataBookStockDao">
+        UPDATE mall_book SET total=total-#{quantity},sales=sales+#{quantity} WHERE book_id=#{book_id}
+    </update>
+
+    <!--用户立购买加入订单-->
+    <insert id="addShoppingCartDao">
+        insert into mall_order(user_id,book_id,nick_name,tel,address,book_img,book_name,buy_price,buy_num,buy_time)
+        values(#{user_id},#{book_id},#{nick_name},#{tel},#{address},#{book_img},#{book_name},#{buy_price},#{buy_num},#{buy_time})
+    </insert>
+
+    <!--查看购物车有没有本商品，有就修改数量，没有再加入购物车-->
+    <select id="selectCartbookByIdDao" resultType="com.gd.bookshopboot.domain.MallCart">
+        select * from mall_cart where book_id=#{book_id}
+    </select>
+
+    <!--加入购物车-->
+    <insert id="addCartDao">
+        insert into mall_cart(user_id,book_id,book_name,book_img,price,num)
+        values(#{user_id},#{book_id},#{book_name},#{book_img},#{price},#{num})
+    </insert>
+
+    <!--购物车有了这件商品就修改数量-->
+    <update id="updataCartbookNumDao">
+        update mall_cart set num=num+#{num} where book_id=#{book_id} and cart_id=#{cart_id}
+    </update>
+
+    <!--根据用户id查询用户的购物车信息-->
+    <select id="getCartByUserIdDao" resultType="com.gd.bookshopboot.domain.MallCart">
+        SELECT * FROM mall_cart WHERE user_id=#{user_id}
+    </select>
+
+    <!--修改购物车中图书的数量-->
+    <update id="buyNumChangeDao">
+        update mall_cart set num=#{num} where cart_id=#{cart_id}
+    </update>
+
+    <!--根据购物车id删除信息-->
+    <delete id="deleteRowDao">
+        delete from mall_cart where cart_id=#{cart_id}
+    </delete>
+
+    <!--获取用户的订单-->
+    <select id="getUserOrderListDao" resultType="com.gd.bookshopboot.domain.MallOrder">
+        select * from mall_order where user_id=#{user_id}
+    </select>
+
+    <!--根据id删除订单-->
+    <delete id="deleteOrderByIdDao">
+        delete from mall_order where order_id=#{id}
+    </delete>
+
+    <!--根据用户名查询用户-->
+    <select id="selectUserByUserNameDao" resultType="com.gd.bookshopboot.domain.Mall_user">
+        select * from mall_user where username=#{username}
+    </select>
+
+    <!--注册用户-->
+    <insert id="registerUserDao">
+        insert into mall_user(username,password,real_name,age,phone,email,address,postcode,register_time,gender,salt)
+        values (#{username},#{password},#{real_name},#{age},#{phone},#{email},#{address},#{postcode},#{register_time},#{gender},#{salt})
+    </insert>
+
+    <!--根据用户id查询用户详情-->
+    <select id="userInfoDao" resultType="com.gd.bookshopboot.domain.Mall_user">
+        select * from mall_user where user_id=#{user_id}
+    </select>
+
+    <!--修改用户头像-->
+    <update id="updataUserTxDao">
+        update mall_user set user_img=#{user_img} where user_id=#{user_id}
+    </update>
+
+    <!--修改用户信息-->
+    <update id="editUserInfoDao">
+        update mall_user set username=#{username},real_name=#{real_name},age=#{age},phone=#{phone},
+        email=#{email},address=#{address},postcode=#{postcode},gender=#{gender} where user_id=#{user_id}
+    </update>
+
+<!-- 修改密码-->
+    <update id="changeUserPassword">
+        update mall_user set password=#{password},salt=#{salt} where user_id = #{user_id}
+    </update>
+
+    <!--根据用户id查询用户反馈-->
+    <select id="getFeedbackListDao" resultType="com.gd.bookshopboot.domain.Feedback">
+        select * from feedback where user_id=#{user_id}
+    </select>
+
+    <!--添加用户反馈-->
+    <insert id="addFeedbackDao">
+        insert into feedback(user_name,feedback_info,feedback_time,user_id)
+        values (#{user_name},#{feedback_info},#{feedback_time},#{user_id})
+    </insert>
+
+    <!--根据id删除用户反馈信息-->
+    <delete id="removeFeedbackByIdDao">
+        delete from feedback where id=#{id}
+    </delete>
+
+    <!--获取用户的收藏列表-->
+    <select id="getCollectionListDao" resultType="com.gd.bookshopboot.domain.CollectionBook">
+        select * from collectionbook where user_id=#{user_id}
+    </select>
+
+    <!--删除收藏-->
+    <delete id="deleteCollectionByIdDao">
+        delete from collectionbook where id=#{id}
+    </delete>
+
+    <!--用户确定收货-->
+    <update id="receivingDao">
+        update mall_order set status=2 where order_id=#{id}
+    </update>
+</mapper>

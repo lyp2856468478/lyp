@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.bookshopboot.dao.publicDao">
+    <!--随机查询13条类别-->
+    <select id="getThirteenCategoryDao" resultType="com.gd.bookshopboot.domain.MallCategory">
+        SELECT * FROM mall_category ORDER BY RAND() limit 20
+    </select>
+
+    <!--获取轮播图-->
+    <select id="getRotationChartListDao" resultType="com.gd.bookshopboot.domain.RotationChart">
+        select * from rotation_chart
+    </select>
+
+    <!--随机查询8本图书-->
+    <select id="randomBookDao" resultType="com.gd.bookshopboot.domain.MallBook">
+        SELECT * FROM mall_book ORDER BY RAND() limit 8
+    </select>
+
+    <!--获取最新上架的图书-->
+    <select id="getNewBookDao" resultType="com.gd.bookshopboot.domain.MallBook">
+        SELECT * FROM mall_book ORDER BY add_time DESC LIMIT 5
+    </select>
+
+    <!--获取首页热销图书-->
+    <select id="salesRankingDao" resultType="com.gd.bookshopboot.domain.MallBook">
+        SELECT * FROM mall_book ORDER BY sales DESC LIMIT 10
+    </select>
+
+    <!--随机查询10本图书，猜你喜欢区-->
+    <select id="randomBook_twoDao" resultType="com.gd.bookshopboot.domain.MallBook">
+        SELECT * FROM mall_book ORDER BY RAND() limit 10
+    </select>
+
+    <!--推送类别一样图书-->
+    <select id="randomBook_Bycategoryid" resultType="com.gd.bookshopboot.domain.MallBook">
+        SELECT * FROM mall_book WHERE category_id=#{categoryId} ORDER BY RAND() limit 5
+    </select>
+
+    <!--查询所有的图书-->
+    <select id="getBookListDao" resultType="com.gd.bookshopboot.domain.MallBook">
+        select * from mall_book
+    </select>
+
+    <!--根据关键字查询图书-->
+    <select id="selectkeybookDao" resultType="com.gd.bookshopboot.domain.MallBook">
+        select * from mall_book where book_name like "%" #{key} "%"
+    </select>
+
+    <!--根据图书类别ID查询图书-->
+    <select id="bookcategoryByIdDao" resultType="com.gd.bookshopboot.domain.MallBook">
+        select * from mall_book where category_id=#{categoryId}
+    </select>
+
+    <!--根据图书id查询图书详情-->
+    <select id="getBookDetailsByIdDao" resultType="com.gd.bookshopboot.domain.MallBook">
+        SELECT * FROM mall_book WHERE book_id=#{book_id}
+    </select>
+
+    <!--根据图书类别id查询所属类别-->
+    <select id="getCategoryByIdDao" resultType="com.gd.bookshopboot.domain.MallCategory">
+        SELECT * FROM mall_category WHERE category_id=#{category_id}
+    </select>
+
+    <!--查询所有类别-->
+    <select id="getBookCategoryListDao" resultType="com.gd.bookshopboot.domain.MallCategory">
+         select * from mall_category
+    </select>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.bookshopboot.dao.adminDao">
+    <!--管理员登录-->
+    <select id="adminLoginDao" resultType="com.gd.bookshopboot.domain.Admin">
+        select * from admin where admin_name=#{admin_name} and admin_password=#{admin_password}
+    </select>
+
+    <!--获取所有用户列表-->
+    <select id="getUserListDao" resultType="com.gd.bookshopboot.domain.Mall_user">
+        select * from mall_user
+    </select>
+
+    <!--根据用户名的关键字查询指定用户-->
+    <select id="selectUserByKeyDao" resultType="com.gd.bookshopboot.domain.Mall_user">
+        select * from mall_user where username like "%" #{key} "%"
+    </select>
+
+    <!--根据用户id删除用户信息-->
+    <delete id="removeUserByIdDao">
+        delete from mall_user where user_id=#{user_id}
+    </delete>
+
+    <!--获取所有用户评论-->
+    <select id="getUserCommentListDao" resultType="com.gd.bookshopboot.domain.Comment">
+        select * from comment
+    </select>
+
+    <!--根据id删除评论-->
+    <delete id="removeCommentByIdDao">
+        delete from comment where id=#{id}
+    </delete>
+
+    <!--获取所有用户反馈信息-->
+    <select id="getFeedbackInfoListDao" resultType="com.gd.bookshopboot.domain.Feedback">
+        select * from feedback
+    </select>
+
+    <!--添加类别-->
+    <insert id="addCategoryDao">
+        insert into mall_category(category_name)
+        values (#{category_name})
+    </insert>
+
+    <!--根据id修改此反馈信息为已读-->
+    <update id="updataReadByIdDao">
+        update feedback set feedback_read=1 where id=#{id}
+    </update>
+
+    <!--一键读取反馈信息-->
+    <update id="oneKeyReadDao">
+        update feedback set feedback_read=1
+    </update>
+
+    <!--获取所有轮播图列表-->
+    <select id="getRotationChartListDao" resultType="com.gd.bookshopboot.domain.RotationChart">
+        select * from rotation_chart
+    </select>
+
+    <!--添加轮播图图片-->
+    <insert id="addRotationChartDao">
+        insert into rotation_chart(img,img_name)
+        values (#{img},#{img_name})
+    </insert>
+
+    <!--根据id删除轮播图图片-->
+    <delete id="removeRotationChartByIdDao">
+        delete from rotation_chart where id=#{id}
+    </delete>
+
+    <!--根据类别的关键字查询类别-->
+    <select id="selectCategoryByKeyDao" resultType="com.gd.bookshopboot.domain.MallCategory">
+        select * from mall_category where category_name like "%" #{key} "%"
+    </select>
+
+    <!--修改图书类别-->
+    <update id="updataCategoryDao">
+        update mall_category set category_name=#{category_name} where category_id=#{category_id}
+    </update>
+
+    <!--删除类别-->
+    <delete id="removeCategoryDao">
+        delete from mall_category where category_id=#{category_id}
+    </delete>
+
+    <!--添加图书-->
+    <insert id="addBookDao">
+        insert into mall_book(book_name,author,book_man,price,category_id,total,book_img,add_time,introduction)
+        values (#{book_name},#{author},#{book_man},#{price},#{category_id},#{total},#{book_img},#{add_time},#{introduction})
+    </insert>
+
+    <!--修改图书信息-->
+    <update id="editBookInfoDao">
+        update mall_book set book_name=#{book_name},author=#{author},book_man=#{book_man},price=#{price},category_id=#{category_id},
+        total=#{total},book_img=#{book_img},sales=#{sales},add_time=#{add_time},introduction=#{introduction} where book_id=#{book_id}
+    </update>
+
+    <!--根据id删除图书-->
+    <delete id="removeBookByIdDao">
+        delete from mall_book where book_id=#{book_id}
+    </delete>
+
+    <!--获取所有未发货订单-->
+    <select id="getOrderListDao" resultType="com.gd.bookshopboot.domain.MallOrder">
+        select * from mall_order where status=0
+    </select>
+
+    <!--发货-->
+    <update id="updataOrderDao">
+        update mall_order set status=1 where order_id=#{order_id}
+    </update>
+
+    <!--一键发货-->
+    <update id="oneKeyOrderDao">
+        update mall_order set status=1
+    </update>
+
+    <!--获取所有已发货订单-->
+    <select id="getShippedOrderListDao" resultType="com.gd.bookshopboot.domain.MallOrder">
+        select * from mall_order where status=2 or status=1
+    </select>
+
+    <!--根据id删除订单-->
+    <delete id="removeOrderByIdDao">
+        delete from mall_order where order_id=#{order_id}
+    </delete>
+</mapper>

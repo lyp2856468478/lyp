@@ -1,0 +1,13 @@
+#DataSource数据源
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bookstore?serverTimezone=GMT%2B8&useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8 #连接地址 ///默认是本机
+    username: root  #连接的用户名账号
+    password: lyp20000814  #连接的用户名密码
+    driver-class-name: com.mysql.cj.jdbc.Driver #mysql驱动
+
+#配置mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*Dao.xml #mapper映射文件的路径
+  type-aliases-package: com.gd.bookstore.domain #包的别名
+# config-location: 指定mybatis的核心配置文件
